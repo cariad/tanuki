@@ -94,7 +94,9 @@ cd ~/.tanuki
 ./bootstrap.sh
 ```
 
-At this point, you should be able to SSH from your Mac into _tanuki_ at **tanuki.local**:
+You will be prompted for your account password once or twice.
+
+With the bootstrap complete, you can SSH from your Mac into _tanuki_ at **tanuki.local**:
 
 ```bash
 ssh cariad@tanuki.local
@@ -120,6 +122,8 @@ On your Mac:
 ```bash
 ./upload-gpg-key.sh -host tanuki6.local -host-user cariad -key cariad@hey.com
 ```
+
+You will be prompted to enter your secret GPG key passphrase. This is required to export the key.
 
 ## Install and configure all the things
 
