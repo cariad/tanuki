@@ -27,8 +27,24 @@ fi
 
 echo -e "${li:?}Importing environment variables..."
 eval "${tanukirc_line:?}"
-echo $PATH
 
+
+#
+# Create SSH key pair (for authenticating with GitLab, etc).
+#
+
+if [ -f ~/.ssh/id_ed25519 ]; then
+  echo -e "${li:?}Skipping SSH key pair generation."
+  generated_ssh=0
+else
+  echo
+  echo
+  echo -e "${li:?}Generating SSH key pair..."
+  echo
+  ssh-keygen -t ed25519 -C cariad@hey.com -f ~/.ssh/id_ed25519
+  echo
+  generated_ssh=1
+fi
 
 echo -e "${li:?}Installing auto-cpufreq..."
 sudo snap install auto-cpufreq
@@ -152,24 +168,13 @@ echo -e "${li:?}Cleaning-up after AWS CLI installation..."
 rm -rf /tmp/aws.zip
 rm -rf /tmp/aws
 
-#
-# Create SSH key pair (for authenticating with GitLab, etc).
-
-if [ -f ~/.ssh/id_ed25519 ]; then
-  echo -e "${li:?}Skipping SSH key pair generation."
-  generated_ssh=0
-else
-  echo -e "${li:?}Generating SSH key pair..."
-  ssh-keygen -t ed25519 -C cariad@hey.com -f ~/.ssh/id_ed25519
-  generated_ssh=1
-fi
 
 echo
 echo
 echo -e "${ok:?}Nearly done!"
 
 if [ "${generated_ssh:?}" == "1" ]; then
-  echo -e "${ok:?}Your public key is: $(cat ~/.ssh/id_ed25519)"
+  echo -e "${ok:?}Your public key is: $(cat ~/.ssh/id_ed25519.pub)"
   echo -e "${li:?}To add this key to GitHub: https://github.com/settings/ssh/new"
   echo -e "${li:?}To add this key to GitLab: https://gitlab.com/-/profile/keys"
 fi
