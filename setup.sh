@@ -11,6 +11,14 @@ apt update --yes
 echo -e "${li:?} Upgrading..."
 apt upgrade --yes
 
+
+echo -e "${li:?} Installing auto-cpufreq..."
+snap install auto-cpufreq
+
+echo -e "${li:?} Installing auto-cpufreq process..."
+# auto-cpufreq --install
+
+
 echo -e "${li:?} Installing Docker..."
 apt install docker.io docker-compose --yes
 
@@ -23,12 +31,6 @@ systemctl start docker
 user="$(logname)"
 echo -e "${li:?} Adding ${user:?} to Docker group..."
 gpasswd -a "${user:?}" docker
-
-echo -e "${li:?} Installing auto-cpufreq..."
-snap install auto-cpufreq
-
-echo -e "${li:?} Installing auto-cpufreq process..."
-auto-cpufreq --install
 
 echo -e "${li:?} Installing pyenv..."
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv
