@@ -14,47 +14,51 @@ ok="\033[0;32m✔️\033[0m "  # OK
 # pyenv_dir="${home:?}/.pyenv"
 # echo -e "${li:?} pyenv directory: ${pyenv_dir:?}"
 
-echo -e "${li:?} Updating..."
+echo -e "${li:?}Updating..."
 sudo apt update --yes
 
-echo -e "${li:?} Upgrading..."
+echo -e "${li:?}Upgrading..."
 sudo apt upgrade --yes
 
 
-echo -e "${li:?} Installing auto-cpufreq..."
+echo -e "${li:?}Installing auto-cpufreq..."
 sudo snap install auto-cpufreq
 
-echo -e "${li:?} Installing auto-cpufreq process..."
+echo -e "${li:?}Installing auto-cpufreq process..."
 # auto-cpufreq --install
 
 
-echo -e "${li:?} Installing Docker..."
+git config pull.rebase        false
+git config init.defaultBranch main
+
+
+echo -e "${li:?}Installing Docker..."
 sudo apt install build-essential \
                  docker.io       \
                  docker-compose --yes
 
-echo -e "${li:?} Enabling Docker..."
+echo -e "${li:?}Enabling Docker..."
 sudo systemctl enable docker
 
-echo -e "${li:?} Starting Docker..."
+echo -e "${li:?}Starting Docker..."
 sudo systemctl start docker
 
 user="$(whoami)"
-echo -e "${li:?} Adding ${user:?} to Docker group..."
+echo -e "${li:?}Adding ${user:?} to Docker group..."
 sudo gpasswd -a "${user:?}" docker
 
 
 if [ -d ~/.pyenv ]; then
-  echo -e "${li:?} Updating pyenv..."
+  echo -e "${li:?}Updating pyenv..."
   pushd ~/.pyenv
   git pull --ff-only
   popd
 else
-  echo -e "${li:?} Installing pyenv..."
+  echo -e "${li:?}Installing pyenv..."
   git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 fi
 
-pushd "${pyenv_dir:?}"
+pushd ~/.pyenv
 src/configure
 make -C src
 popd
@@ -62,10 +66,10 @@ popd
 tanukirc_line=". ~/.tanuki/data/bashrc.sh"
 
 if ! grep -q "${tanukirc_line:?}" ~/.bashrc; then
-  echo -e "${li:?} Referencing: ${tanukirc_line:?}"
+  echo -e "${li:?}Referencing: ${tanukirc_line:?}"
   echo "${tanukirc_line:?}" >> ~/.bashrc
 else
-  echo -e "${li:?} tanukirc already referenced."
+  echo -e "${li:?}tanukirc already referenced."
 fi
 
 # TODO: aws
