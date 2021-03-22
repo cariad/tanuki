@@ -5,21 +5,12 @@ set -e
 li="\033[1;34m↪\033[0m "  # List item
 ok="\033[0;32m✔️\033[0m "  # OK
 
-# user="$(logname)"
-# echo -e "${li:?} User:            ${user:?}"
-
-# home="/home/${user:?}"
-# echo -e "${li:?} Home:            ${home:?}"
-
-# pyenv_dir="${home:?}/.pyenv"
-# echo -e "${li:?} pyenv directory: ${pyenv_dir:?}"
 
 echo -e "${li:?}Updating..."
 sudo apt update --yes
 
 echo -e "${li:?}Upgrading..."
 sudo apt upgrade --yes
-
 
 echo -e "${li:?}Installing auto-cpufreq..."
 sudo snap install auto-cpufreq
@@ -56,7 +47,8 @@ git config --global user.signingkey "${key_id:?}"
 echo -e "${li:?}Installing Docker..."
 sudo apt install build-essential \
                  docker.io       \
-                 docker-compose --yes
+                 docker-compose  \
+                 unzip --yes
 
 echo -e "${li:?}Enabling Docker..."
 sudo systemctl enable docker
