@@ -82,8 +82,8 @@ TODO:
 On the NUC:
 
 ```bash
-git clone https://github.com/cariad/tanuki ~
-cd ~/tanuki
+git clone https://github.com/cariad/tanuki ~/.tanuki
+cd ~/.tanuki
 ./bootstrap.sh
 ```
 
@@ -101,7 +101,7 @@ SSH in and run:
 
 ```bash
 ssh cariad@tanuki5.local
-cd ~/tanuki
+cd ~/.tanuki
 ./setup.sh
 ```
 
@@ -145,7 +145,7 @@ On your Mac:
 git clone https://github.com/cariad/tanuki ~
 ~/share-gpg-key.sh -key cariad@hey.com -host tanuki3.local -host-user cariad
 ssh cariad@tanuki3.local
-~/tanuki/setup.sh
+~/.tanuki/setup.sh
 ```
 
 ## OPTIONAL: Verify CPU scaling
