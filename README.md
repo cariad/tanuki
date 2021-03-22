@@ -118,7 +118,6 @@ Make a note of **total time** under **General statistics**. It could be ~30 seco
 
 ## Setup
 
-
 1. Install:
     1. Select your language (English UK)
     1. Offer to use later installer: accept.

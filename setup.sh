@@ -39,6 +39,7 @@ sudo systemctl enable docker
 echo -e "${li:?} Starting Docker..."
 sudo systemctl start docker
 
+user="$(whoami)"
 echo -e "${li:?} Adding ${user:?} to Docker group..."
 sudo gpasswd -a "${user:?}" docker
 
