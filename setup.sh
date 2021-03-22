@@ -27,7 +27,7 @@ fi
 
 echo -e "${li:?}Importing environment variables..."
 eval "${tanukirc_line:?}"
-
+echo $PATH
 
 
 echo -e "${li:?}Installing auto-cpufreq..."
@@ -103,6 +103,8 @@ else
   echo -e "${li:?}Installing pyenv..."
   git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 fi
+
+eval "$(pyenv init -)"
 
 pushd ~/.pyenv
 src/configure
