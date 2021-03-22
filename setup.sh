@@ -36,7 +36,14 @@ echo -e "${li:?} Installing pyenv..."
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 cd ~/.pyenv && src/configure && make -C src
 
-cat data/bashrc.sh >> ~/.bashrc
+tanukirc=". ~/tanuki/data/bashrc.sh"
+
+if ! grep -q "${tanukirc:?}" ~/.bashrc; then
+  echo -e "${li:?} Referencing: ${tanukirc:?}"
+  echo ". ~/tanuki/data/bashrc.sh" >> ~/.bashrc
+else
+  echo -e "${li:?} tanukirc already referenced."
+fi
 
 # TODO: aws
 
