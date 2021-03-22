@@ -47,7 +47,7 @@ sudo gpasswd -a "${user:?}" docker
 if [ -d ~/.pyenv ]; then
   echo -e "${li:?} Updating pyenv..."
   pushd ~/.pyenv
-  git pull
+  git pull --ff-only
   popd
 else
   echo -e "${li:?} Installing pyenv..."
