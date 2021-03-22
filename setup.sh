@@ -38,11 +38,17 @@ else
   echo -e "${li:?}No private key to import."
 fi
 
+if [ -f ~/.gitconfig ]; then
+  echo -e "${li:?}Backing-up .gitconfig..."
+  rm -f ~/.gitconfig.old
+  mv ~/.gitconfig ~/.gitconfig.old
+fi
+
 echo -e "${li:?}Discovering private key..."
 key_id="$(gpg --with-colons --list-secret-keys | awk -F: '$1 == "fpr" {print $10;}' | head --lines 1)"
 
 echo -e "${li:?}Configuring git..."
-ln -s home/.gitconfig ~/.gitconfig
+ln home/.gitconfig ~/.gitconfig
 git config --global user.signingkey "${key_id:?}"
 
 
@@ -87,7 +93,32 @@ else
   echo -e "${li:?}tanukirc already referenced."
 fi
 
+echo -e "${li:?}Importing AWS CLI Team key..."
+gpg --import keys/aws-cli.pub
 
-# TODO: aws
+echo -e "${li:?}Downloading AWS CLI..."
+curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip     -o /tmp/aws.zip
+
+echo -e "${li:?}Downloading AWS CLI signature..."
+curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip.sig -o /tmp/aws.zip.sig
+
+echo -e "${li:?}Verifying AWS CLI signature..."
+gpg --verify /tmp/aws.zip.sig /tmp/aws.zip
+rm -rf /tmp/aws.zip.sig
+
+echo -e "${li:?}Unpacking AWS CLI..."
+unzip /tmp/aws.zip -d /tmp
+
+echo -e "${li:?}Installing AWS CLI..."
+sudo /tmp/aws/install
+aws --version
+
+echo -e "${li:?}Cleaning-up after AWS CLI installation..."
+rm -rf /tmp/aws.zip
+rm -rf /tmp/aws
+
+
+
+
 
 echo -e "${ok:?}OK! Run \"sudo reboot\" now to complete the setup."
