@@ -5,7 +5,6 @@ set -e
 li="\033[1;34m↪\033[0m "  # List item
 ok="\033[0;32m✔️\033[0m "  # OK
 
-
 echo -e "${li:?}Updating..."
 sudo apt update --yes
 
@@ -17,9 +16,6 @@ sudo snap install auto-cpufreq
 
 echo -e "${li:?}Installing auto-cpufreq process..."
 # auto-cpufreq --install
-
-
-
 
 if [ -f private.key ]; then
   echo -e "${li:?}Importing private key..."
@@ -99,7 +95,7 @@ gpg --verify /tmp/aws.zip.sig /tmp/aws.zip
 rm -rf /tmp/aws.zip.sig
 
 echo -e "${li:?}Unpacking AWS CLI..."
-unzip /tmp/aws.zip -d /tmp
+unzip -q /tmp/aws.zip -d /tmp
 
 echo -e "${li:?}Installing AWS CLI..."
 sudo /tmp/aws/install
@@ -108,9 +104,5 @@ aws --version
 echo -e "${li:?}Cleaning-up after AWS CLI installation..."
 rm -rf /tmp/aws.zip
 rm -rf /tmp/aws
-
-
-
-
 
 echo -e "${ok:?}OK! Run \"sudo reboot\" now to complete the setup."
