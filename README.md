@@ -118,7 +118,7 @@ Make a note of **total time** under **General statistics**. It could be ~30 seco
 On your Mac:
 
 ```bash
-./upload-gpg-key.sh -host tanuki.local -host-user cariad -key cariad@hey.com
+./upload-gpg-key.sh -host tanuki6.local -host-user cariad -key cariad@hey.com
 ```
 
 ## Install and configure all the things
@@ -130,7 +130,9 @@ cd ~/.tanuki
 ./setup.sh
 ```
 
+You will be prompted to enter your secret GPG key passphrase. This is required to import the key.
 
+When the installation is complete, reboot _tanuki_ then reconnect.
 
 ## OPTIONAL: Verify CPU scaling
 

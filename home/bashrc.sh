@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+export CFLAGS="-O2"
+
 GPG_TTY="$(tty)"
 export GPG_TTY
 

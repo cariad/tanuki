@@ -11,11 +11,32 @@ sudo apt update --yes
 echo -e "${li:?}Upgrading..."
 sudo apt upgrade --yes
 
+#
+# Import environment variables. Do this early because some values are needed for
+# builds and installations below.
+#
+
+tanukirc_line=". ~/.tanuki/home/bashrc.sh"
+
+if ! grep -q "${tanukirc_line:?}" ~/.bashrc; then
+  echo -e "${li:?}Referencing: ${tanukirc_line:?}"
+  echo "${tanukirc_line:?}" >> ~/.bashrc
+else
+  echo -e "${li:?}tanukirc already referenced."
+fi
+
+echo -e "${li:?}Importing environment variables..."
+eval "${tanukirc_line:?}"
+
+
+
 echo -e "${li:?}Installing auto-cpufreq..."
 sudo snap install auto-cpufreq
 
 echo -e "${li:?}Installing auto-cpufreq process..."
 # auto-cpufreq --install
+
+
 
 if [ -f private.key ]; then
   echo -e "${li:?}Importing private key..."
@@ -40,11 +61,24 @@ git config --global user.signingkey "${key_id:?}"
 
 
 
-echo -e "${li:?}Installing Docker..."
-sudo apt install build-essential \
-                 docker.io       \
-                 docker-compose  \
-                 unzip --yes
+echo -e "${li:?}Installing packages..."
+sudo apt install --yes \
+    build-essential    \
+    docker.io          \
+    docker-compose     \
+    libbz2-dev         \
+    libffi-dev \
+    liblzma-dev \
+    libncurses5-dev \
+    libncursesw5-dev \
+    libreadline-dev \
+    libsqlite3-dev \
+    libssl-dev \
+    llvm \
+    tk-dev \
+    unzip              \
+    xz-utils \
+    zlib1g-dev
 
 echo -e "${li:?}Enabling Docker..."
 sudo systemctl enable docker
@@ -56,6 +90,9 @@ user="$(whoami)"
 echo -e "${li:?}Adding ${user:?} to Docker group..."
 sudo gpasswd -a "${user:?}" docker
 
+#
+# Install pyenv.
+#
 
 if [ -d ~/.pyenv ]; then
   echo -e "${li:?}Updating pyenv..."
@@ -72,14 +109,22 @@ src/configure
 make -C src
 popd
 
-tanukirc_line=". ~/.tanuki/home/bashrc.sh"
+#
+# Install Python.
+#
 
-if ! grep -q "${tanukirc_line:?}" ~/.bashrc; then
-  echo -e "${li:?}Referencing: ${tanukirc_line:?}"
-  echo "${tanukirc_line:?}" >> ~/.bashrc
-else
-  echo -e "${li:?}tanukirc already referenced."
-fi
+echo -e "${li:?}Installing Python ${PYENV_VERSION:?}..."
+pyenv install "${PYENV_VERSION:?}"
+
+#
+# Install Python packages.
+#
+
+python -m pip install --upgrade pip pipenv
+
+#
+# Install AWS CLI.
+#
 
 echo -e "${li:?}Importing AWS CLI Team key..."
 gpg --import keys/aws-cli.pub
