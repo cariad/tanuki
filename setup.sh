@@ -25,7 +25,7 @@ echo -e "${li:?} Adding ${user:?} to Docker group..."
 gpasswd -a "${user:?}" docker
 
 echo -e "${li:?} Installing auto-cpufreq..."
-apt install auto-cpufreq
+snap install auto-cpufreq
 
 echo -e "${li:?} Installing auto-cpufreq process..."
 auto-cpufreq --install
