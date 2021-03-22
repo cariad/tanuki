@@ -98,7 +98,7 @@ echo -e "${li:?}Unpacking AWS CLI..."
 unzip -q /tmp/aws.zip -d /tmp
 
 echo -e "${li:?}Installing AWS CLI..."
-sudo /tmp/aws/install
+sudo /tmp/aws/install --update
 aws --version
 
 echo -e "${li:?}Cleaning-up after AWS CLI installation..."

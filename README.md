@@ -1,64 +1,51 @@
 # tanuki
 
-Setup script for tanuki; my Intel NUC development box
+Hi! I'm **[Cariad](https://cariad.io)**. I'm a **Python developer** by trade.
 
-## Build
+I run **Visual Studio Code on a MacBook Pro** (_macaroni_), and use the Remote SSH extension to **develop, run and test my code on an Intel NUC** (_tanuki_).
 
-TODO: link to components, including USB stick.
+This project holds my **scripts and documentation** for setting up _tanuki_ from an empty box to a **remote Python development machine**.
+
+With thanks to [@dmrz](https://github.com/dmrz) for [inspiring](https://dimamoroz.com/2021/03/09/intel-nuc-for-development/) me to finish this!
+
+## Assumptions and requirements
+
+This guide assumes you have a Mac running **macOS 11.0 Big Sur or later**, and that you intend to install **Ubuntu Server 20.10** onto an **Intel NUC10i5FNH NUC** (or compatible).
+
+## Building your own _tanuki_
+
+<span style="font-size: smaller; font-style: italic;">This list contains Amazon UK affiliate links. As an Amazon Associate, I earn from qualifying purchases.</span>
+
+If you want to follow along, these are the parts I use:
+
+- [Intel NUC10i5FNH NUC](https://amzn.to/3d1HEud)
+- [Corsair Vengeance 32 GB RAM](https://amzn.to/3r8yqkF)
+- [Samsung 980 PRO 250 GB](https://amzn.to/3ccXYcm)
+- [Samsung 32 GB USB](https://amzn.to/3lEV7Mg)
 
 ## Prepare an SSH key pair
 
-We'll use an SSH key pair to authenticate SSH connections into tanuki.
+We'll use an SSH key pair to authenticate SSH connections into _tanuki_.
 
-The public key will be published on GitHub so the Ubuntu installer can download it and set up OpenSSH for us. Your private SSH key never needs to be copied to tanuki.
-
-Skip this if you already have an SSH key pair.
-
-### Create an SSH key pair
-
-On your Mac, replacing my email address for yours:
-
-```bash
-ssh-keygen -t ed25519 -C cariad@hey.com
-```
-
-Add your key to `ssh-agent` to remember your passphrase for you:
-
-```bash
-ssh-add -K ~/.ssh/id_ed25519
-```
-
-Copy your public key to the clipboard:
-
-```bash
-pbcopy < ~/.ssh/id_ed25519.pub
-```
-
-Go to [your GitHub keys](https://github.com/settings/keys), click **New SSH key** then paste in your public key from the clipboard. Make the title meaningful to you, but don't sweat it.
-
-### Backing up your keys
-
-1. Copy `~/.ssh/id_ed25519` and `~/.ssh/id_ed25519.pub` to a safe place.
-1. Commit your passphrase to memory.
-
-### Restoring your keys from a backup
-
-1. Copy `id_ed25519` and `id_ed25519.pub` into `~/.ssh`.
-1. Run:
+1. On your Mac:
 
     ```bash
-    ssh-add -K ~/.ssh/id_ed25519
+    ssh-keygen -t ed25519 -C cariad@hey.com  # Use your own email address
+    ssh-add -K ~/.ssh/id_ed25519             # Add to ssh-agent to remember your passphrase
+    pbcopy < ~/.ssh/id_ed25519.pub           # Copy your public key to the clipboard
     ```
 
-## Prepare a GPG key
+1. Add your new key [to your GitHub account](https://github.com/settings/ssh/new).
 
-We'll use a GPG key to sign our git commits. Skip this if you already have a GPG key.
+## Prepare a GPG key pair
+
+We'll use a GPG key to sign our git commits.
 
 1. [Download](https://gpgtools.org/) and install GPG Suite. If you plan on only using `gpg` on the command-line then customise the installation to disable **GPG Mail** and **GPG Services**.
 
-![Customised GPG Suite installation](docs/install-gpg-suite.png)
+    ![Customised GPG Suite installation](docs/install-gpg-suite.png)
 
-1. Run:
+1. Generate a key following the on-screen instructions:
 
     ```bash
     gpg --generate-key
@@ -73,50 +60,9 @@ We'll use a GPG key to sign our git commits. Skip this if you already have a GPG
 
 Connect _tanuki_ to a keyboard, monitor and network.
 
-UEFI.
+TODO: UEFI.
 
 ## Install Ubuntu
-
-TODO:
-
-On the NUC:
-
-```bash
-git clone https://github.com/cariad/tanuki ~/.tanuki
-cd ~/.tanuki
-./bootstrap.sh
-```
-
-## Copy GPG key
-
-On your Mac:
-
-```bash
-./upload-gpg-key.sh -host tanuki5.local -host-user cariad -key cariad@hey.com
-```
-
-## Run setup
-
-SSH in and run:
-
-```bash
-ssh cariad@tanuki5.local
-cd ~/.tanuki
-./setup.sh
-```
-
-## OPTIONAL: Test CPU scaling
-
-Run:
-
-```bash
-sudo apt install sysbench
-sysbench cpu --cpu-max-prime=10000000 --threads=8 run
-```
-
-Make a note of **total time** under **General statistics**. It could be ~30 seconds.
-
-## Setup
 
 1. Install:
     1. Select your language (English UK)
@@ -138,14 +84,53 @@ Make a note of **total time** under **General statistics**. It could be ~30 seco
 1. Wait, then reboot.
 1. Login.
 
+## Bootstrap SSH
+
+On the NUC:
+
+```bash
+git clone https://github.com/cariad/tanuki ~/.tanuki
+cd ~/.tanuki
+./bootstrap.sh
+```
+
+At this point, you should be able to SSH from your Mac into _tanuki_ at **tanuki.local**:
+
+```bash
+ssh cariad@tanuki.local
+```
+
+Disconnect your monitor and keyboard from _tanuki_ and work from an SSH session for the remainder.
+
+## OPTIONAL: Test CPU scaling
+
+Run:
+
+```bash
+sudo apt install sysbench
+sysbench cpu --cpu-max-prime=10000000 --threads=8 run
+```
+
+Make a note of **total time** under **General statistics**. It could be ~30 seconds.
+
+## Upload your private GPG key
+
 On your Mac:
 
 ```bash
-git clone https://github.com/cariad/tanuki ~
-~/share-gpg-key.sh -key cariad@hey.com -host tanuki3.local -host-user cariad
-ssh cariad@tanuki3.local
-~/.tanuki/setup.sh
+./upload-gpg-key.sh -host tanuki.local -host-user cariad -key cariad@hey.com
 ```
+
+## Install and configure all the things
+
+In an SSH session on _tanuki_:
+
+```bash
+cd ~/.tanuki
+./setup.sh
+```
+
+
 
 ## OPTIONAL: Verify CPU scaling
 
