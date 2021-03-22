@@ -29,7 +29,9 @@ echo -e "${li:?} Installing auto-cpufreq process..."
 
 
 echo -e "${li:?} Installing Docker..."
-apt install docker.io docker-compose --yes
+apt install build-essential \
+            docker.io \
+            docker-compose --yes
 
 echo -e "${li:?} Enabling Docker..."
 systemctl enable docker
