@@ -1,0 +1,9 @@
+[commit]
+	gpgsign = true
+[init]
+	defaultBranch = main
+[pull]
+	rebase = false
+[user]
+	email = cariad@hey.com
+	name = Cariad Eccleston

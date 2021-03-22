@@ -25,7 +25,7 @@ gpg --armor --output "${private:?}" --export-secret-key "${key:?}"
 remote="${host_user:?}@${host:?}"
 
 echo -e "${li:?}Copying to: ${remote:?}"
-scp "${private:?}" "${remote:?}:~/"
+scp "${private:?}" "${remote:?}:~/.tanuki/"
 rm -rf "${private:?}"
 
 echo -e "${ok:?}Done!"

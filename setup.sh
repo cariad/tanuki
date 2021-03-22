@@ -28,8 +28,23 @@ echo -e "${li:?}Installing auto-cpufreq process..."
 # auto-cpufreq --install
 
 
-git config pull.rebase        false
-git config init.defaultBranch main
+
+
+if [ -f private.key ]; then
+  echo -e "${li:?}Importing private key..."
+  gpg --import private.key
+  rm -f        private.key
+else
+  echo -e "${li:?}No private key to import."
+fi
+
+echo -e "${li:?}Discovering private key..."
+key_id="$(gpg --with-colons --list-secret-keys | awk -F: '$1 == "fpr" {print $10;}' | head --lines 1)"
+
+echo -e "${li:?}Configuring git..."
+ln -s home/.gitconfig ~/.gitconfig
+git config --global user.signingkey "${key_id:?}"
+
 
 
 echo -e "${li:?}Installing Docker..."
@@ -63,7 +78,7 @@ src/configure
 make -C src
 popd
 
-tanukirc_line=". ~/.tanuki/data/bashrc.sh"
+tanukirc_line=". ~/.tanuki/home/bashrc.sh"
 
 if ! grep -q "${tanukirc_line:?}" ~/.bashrc; then
   echo -e "${li:?}Referencing: ${tanukirc_line:?}"
@@ -71,6 +86,7 @@ if ! grep -q "${tanukirc_line:?}" ~/.bashrc; then
 else
   echo -e "${li:?}tanukirc already referenced."
 fi
+
 
 # TODO: aws
 
