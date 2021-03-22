@@ -116,7 +116,7 @@ popd
 #
 
 echo -e "${li:?}Installing Python ${PYENV_VERSION:?}..."
-pyenv install "${PYENV_VERSION:?}"
+pyenv install "${PYENV_VERSION:?}" --skip-existing
 
 #
 # Install Python packages.
