@@ -2,8 +2,12 @@
 
 set -e
 
-li="\033[1;34m↪\033[0m "  # List item
-ok="\033[0;32m✔️\033[0m "  # OK
+pushd scripts
+. ./style.sh
+popd
+
+# li="\033[1;34m↪\033[0m "  # List item
+# ok="\033[0;32m✔️\033[0m "  # OK
 
 echo -e "${li:?}Updating..."
 sudo apt update --yes
