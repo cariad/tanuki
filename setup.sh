@@ -114,27 +114,24 @@ echo -e "${li:?}Cleaning-up after AWS CLI installation..."
 rm -rf /tmp/aws.zip
 rm -rf /tmp/aws
 
-
-echo
-
-if [ -z "${GPG_KEY}" ]; then
+if [ -n "${GPG_KEY}" ]; then
   echo
-  echo -e "${ok:?}A new GPG key was created:"
+  echo "A new GPG key was created:"
   echo
-  gpg --armor --export "${GPG_KEY:?}"
+  echo "    $(gpg --armor --export "${GPG_KEY:?}")"
   echo
-  echo -e "${li:?}To add this GPG key to GitHub: https://github.com/settings/gpg/new"
-  echo -e "${li:?}To add this GPG key to GitLab: https://gitlab.com/-/profile/gpg_keys"
+  echo "    - To add this GPG key to GitHub: https://github.com/settings/gpg/new"
+  echo "    - To add this GPG key to GitLab: https://gitlab.com/-/profile/gpg_keys"
 fi
 
 if [ "${generated_ssh:?}" == "1" ]; then
   echo
-  echo -e "${ok:?}A new SSH key was created:"
+  echo "A new SSH key was created:"
   echo
-  cat ~/.ssh/id_ed25519.pub
+  echo "    $(cat ~/.ssh/id_ed25519.pub)"
   echo
-  echo -e "${li:?}To add this SSH key to GitHub: https://github.com/settings/ssh/new"
-  echo -e "${li:?}To add this SSH key to GitLab: https://gitlab.com/-/profile/keys"
+  echo "    - To add this SSH key to GitHub: https://github.com/settings/ssh/new"
+  echo "    - To add this SSH key to GitLab: https://gitlab.com/-/profile/keys"
 fi
 
 echo -e "${ok:?}Run \"sudo reboot\" to complete the setup."

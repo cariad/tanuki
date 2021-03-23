@@ -3,7 +3,7 @@
 set -e
 
 echo -e "${li:?}Installing Docker..."
-sudo apt install --yes docker.io docker-compose
+sudo apt install -qq --yes docker.io docker-compose
 
 echo -e "${li:?}Enabling Docker..."
 sudo systemctl enable docker
