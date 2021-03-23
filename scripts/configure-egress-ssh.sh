@@ -14,7 +14,7 @@ echo -e "${li:?}Creating SSH key pair (for egress)..."
 
 # The key intentionally has no passphrase because Visual Studio Code's remote
 # SSH sessions can't/won't prompt for it (when cloning from GitLab, etc).
-ssh-keygen -t ed25519 -C cariad@hey.com -f ~/.ssh/id_ed25519 -P
+ssh-keygen -t ed25519 -C cariad@hey.com -f ~/.ssh/id_ed25519 -P ""
 
 #  ssh-add -k ~/.ssh/id_ed25519
 # likely: ssh-keyscan -t rsa gitlab.com  >> ~/.ssh/known_hosts
