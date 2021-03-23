@@ -16,62 +16,31 @@ sudo apt upgrade --yes
 
 . ./scripts/configure-egress-ssh.sh
 
-#
-# Install auto-cpufreq to enable CPU boosting.
-#
+
 
 echo -e "${li:?}Installing auto-cpufreq..."
 # TODO: sudo snap install auto-cpufreq
-
 echo -e "${li:?}Installing auto-cpufreq process..."
-
 # TODO: Enable this for real deployments.
 # auto-cpufreq --install
+
+
 
 # git must be configured before importing the GPG key.
 ./scripts/configure-git.sh
 # The import script will add the signing key to the git configuration.
-. ./scripts/configure-commit-signing-key.sh
+. ./scripts/configure-commit-signing.sh
+
+echo "${GPG_KEY:?}"
+
   ./scripts/configure-known-hosts.sh
   ./scripts/install-docker.sh
 
 echo -e "${li:?}Installing packages..."
-sudo apt install --yes \
-    build-essential    \
-    libbz2-dev         \
-    libffi-dev         \
-    liblzma-dev        \
-    libncurses5-dev    \
-    libncursesw5-dev   \
-    libreadline-dev    \
-    libsqlite3-dev     \
-    libssl-dev         \
-    llvm               \
-    tk-dev \
-    unzip              \
-    xz-utils \
-    zlib1g-dev
+sudo apt install --yes unzip
 
-#
-# Install pyenv.
-#
-
-if [ -d ~/.pyenv ]; then
-  echo -e "${li:?}Updating pyenv..."
-  pushd ~/.pyenv
-  git pull --ff-only
-  popd
-else
-  echo -e "${li:?}Installing pyenv..."
-  git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-fi
-
-eval "$(pyenv init -)"
-
-pushd ~/.pyenv
-src/configure
-make -C src
-popd
+./scripts/install-pyenv-build-dependencies.sh
+./scripts/install-pyenv.sh
 
 #
 # Install Python.
@@ -113,6 +82,8 @@ aws --version
 echo -e "${li:?}Cleaning-up after AWS CLI installation..."
 rm -rf /tmp/aws.zip
 rm -rf /tmp/aws
+
+echo "${GPG_KEY:?}"
 
 if [ -n "${GPG_KEY}" ]; then
   echo
