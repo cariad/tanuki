@@ -11,7 +11,7 @@ fi
 
 if git config --get user.signingkey; then
   echo -e "${ok:?}Commit signing key is already set."
-  return
+  exit 0
 fi
 
 echo -e "${li:?}Creating commit signing key..."
