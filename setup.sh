@@ -9,7 +9,7 @@ set -e
 
 . ./scripts/configure-egress-ssh.sh
   # TODO: ./scripts/install-auto-cpufreq.sh
-  ./scripts/configure-git.sh
+. ./scripts/configure-git.sh
   ./scripts/configure-known-hosts.sh
   ./scripts/install-docker.sh
   ./scripts/install-pyenv-build-dependencies.sh
