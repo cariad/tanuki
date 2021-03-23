@@ -38,10 +38,14 @@ if [ -f ~/.ssh/id_ed25519 ]; then
   generated_ssh=0
 else
   echo
-  ssh-keygen -t ed25519 -C cariad@hey.com -f ~/.ssh/id_ed25519
+  echo "You will be asked to create a passphrase for a new SSH key."
+  echo "Make it memorable -- you'll need to type it again!"
   echo
+  ssh-keygen -t ed25519 -C cariad@hey.com -f ~/.ssh/id_ed25519
 
   eval "$(ssh-agent)"
+  echo
+  echo "Enter your passphrase again to authorise ssh-agent to remember it."
   ssh-add -k ~/.ssh/id_ed25519
   kill "${SSH_AGENT_PID:?}"
   # likely: ssh-keyscan -t rsa gitlab.com  >> ~/.ssh/known_hosts
@@ -62,6 +66,13 @@ if [ -f private.key ]; then
   echo -e "${li:?}Importing private key..."
   gpg --import private.key
   rm -f        private.key
+
+  echo -e "${li:?}Discovering private key..."
+  key_id="$(gpg --with-colons --list-secret-keys | awk -F: '$1 == "fpr" {print $10;}' | head --lines 1)"
+
+  echo -e "${li:?}Configuring git..."
+  ln home/.gitconfig ~/.gitconfig
+  git config --global user.signingkey "${key_id:?}"
 else
   echo -e "${li:?}No private key to import."
 fi
@@ -72,12 +83,6 @@ if [ -f ~/.gitconfig ]; then
   mv ~/.gitconfig ~/.gitconfig.old
 fi
 
-echo -e "${li:?}Discovering private key..."
-key_id="$(gpg --with-colons --list-secret-keys | awk -F: '$1 == "fpr" {print $10;}' | head --lines 1)"
-
-echo -e "${li:?}Configuring git..."
-ln home/.gitconfig ~/.gitconfig
-git config --global user.signingkey "${key_id:?}"
 
 
 
