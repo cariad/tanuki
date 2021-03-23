@@ -2,7 +2,7 @@
 
 [![tanuki](https://github.com/cariad/tanuki/actions/workflows/ci.yml/badge.svg)](https://github.com/cariad/tanuki/actions/workflows/ci.yml)
 
-Hi! I'm [Cariad](https://cariad.io), and I'm a **freelance Python developer** by trade.
+Hi! I'm [Cariad](https://cariad.io), and I'm a freelance Python developer by trade.
 
 I run Visual Studio Code on a MacBook Pro (aka _macaroni_) and use the Remote SSH extension to develop, test and run my code on an Intel NUC (aka _tanuki_).
 
@@ -20,7 +20,7 @@ With thanks to [@dmrz](https://github.com/dmrz) for [inspiring](https://dimamoro
 - `pyenv`
 - `python` 3.9
 
-**Creates:**
+### Creates:
 
 - SSH key pair for authenticating with GitHub, GitLab et al.
 - GPG key pair for signing git commits.
@@ -30,7 +30,7 @@ With thanks to [@dmrz](https://github.com/dmrz) for [inspiring](https://dimamoro
 - GitHub and GitLab as trusted hosts
 - git name and email address
 
-**Enables:**
+### Enables:
 
 - Commit signing
 - CPU performance mode
