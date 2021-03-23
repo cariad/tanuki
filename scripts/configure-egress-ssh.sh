@@ -5,7 +5,7 @@ set -e
 if [ -f ~/.ssh/id_ed25519 ]; then
   echo -e "${ok:?}Egress SSH key pair already exists."
   export CREATED_SSH=0
-  exit
+  return
 fi
 
 echo -e "${li:?}Creating egress SSH key pair..."
