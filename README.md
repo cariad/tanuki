@@ -25,7 +25,7 @@ If you want to follow along, these are the parts I use:
 
 ## Prepare an SSH key pair
 
-We'll use an SSH key pair to authenticate SSH connections into _tanuki_.
+You'll use an SSH key pair to authenticate SSH connections from your Mac into _tanuki_.
 
 1. On your Mac:
 
@@ -35,12 +35,16 @@ We'll use an SSH key pair to authenticate SSH connections into _tanuki_.
     pbcopy < ~/.ssh/id_ed25519.pub           # Copy your public key to the clipboard
     ```
 
-1. Add your new key [to your GitHub account](https://github.com/settings/ssh/new).
+1. Add your new key [to your GitHub account](https://github.com/settings/ssh/new). _The Ubuntu installer will download your key from GitHub and set up OpenSSH automatically._
 
 ## Prepare an Ubuntu USB stick
 
 1. [Download Ubuntu Server 20.10](https://ubuntu.com/download/server#downloads). Use BitTorrent; I like [transmission/transmission](https://github.com/transmission/transmission).
 1. Burn the ISO to a USB stick. I like [balena-io/etcher](https://github.com/balena-io/etcher).
+
+## Fork and configure this project
+
+The only file you need to edit is [identity.sh](identity.sh) which describes all your required personal details.
 
 ## Set up _tanuki_'s hardware
 

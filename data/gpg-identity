@@ -1,0 +1,4 @@
+%no-protection
+Key-Type: default
+Name-Real: ${TANUKI_NAME:?}
+Name-Email: ${TANUKI_NAME:?}

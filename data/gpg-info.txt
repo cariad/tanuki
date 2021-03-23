@@ -1,4 +1,0 @@
-%no-protection
-Key-Type: default
-Name-Real: Moo Moo
-Name-Email: moo@moo.com

@@ -3,6 +3,7 @@
 set -e
 
 . ./scripts/style.sh
+
   ./scripts/update.sh
 . ./scripts/configure-bashrc.sh
 . ./scripts/install-tools.sh

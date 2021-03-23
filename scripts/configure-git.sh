@@ -6,7 +6,7 @@ if [ -f ~/.gitconfig ]; then
   echo -e "${ok:?}\"~/.gitconfig\" already exists."
 else
   echo -e "${li:?}Configuring git..."
-  ln data/.gitconfig ~/.gitconfig
+  ln data/.gitconfig.filled ~/.gitconfig
 fi
 
 if git config --get user.signingkey; then
@@ -16,7 +16,7 @@ fi
 
 echo -e "${li:?}Creating commit signing key..."
 
-GPG_KEY=$(gpg --batch --gen-key data/gpg-info.txt 2>&1 |
+GPG_KEY=$(gpg --batch --gen-key data/gpg-identity.filled 2>&1 |
           sed -n -r 's/gpg: key ([0-9A-F]+) marked as ultimately trusted/\1/p')
 
 export GPG_KEY
