@@ -73,7 +73,7 @@ To run this script yourself, fork the project then edit your [identity.sh](ident
 ## Configure UEFI
 
 1. Connect _tanuki_ to a keyboard, monitor and network.
-1. Turn it on and hammer `F2` to open the UEFI menu.
+1. Turn _tanuki_ on and hammer `F2` to open the UEFI menu.
 1. Press `F9` to load optimised defaults.
 1. Change:
     - **Advanced / Onboard devices / HD audio:** _disable_
@@ -82,11 +82,13 @@ To run this script yourself, fork the project then edit your [identity.sh](ident
     - **Advanced / Onboard devices / Bluetooth:** _disable_
     - **Advanced / Onboard devices / HDMI CEC control:** _disable_
     - **Cooling / Fan control mode:** _Cool_
-1. Press `F10` to save and exit the UEFI menu.
+1. Press `F10` to save and exit.
 
 ## Install Ubuntu
 
-1. Plug in the USB stick, then reboot and hammer `F10` to open the boot menu. Boot from the USB stick.
+1. Plug in the USB stick.
+1. Reboot and hammer `F10` to open the boot menu.
+1. Boot from the USB stick.
 1. During the Ubuntu installation wizard, choose the default options with these exceptions:
     - **Partition the entire disk** but _do not_ use an LVM group. _LVM will partition only half of your SSD._
     - **Enable OpenSSH**. When prompted, import your public SSH key from GitHub. Do not allow password authentication over SSH.
