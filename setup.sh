@@ -37,4 +37,5 @@ if [ "${CREATED_SSH:?}" == "1" ]; then
   echo "    - To add this SSH key to GitLab: https://gitlab.com/-/profile/keys"
 fi
 
+echo
 echo -e "${ok:?}Run \"sudo reboot\" to complete the setup."
