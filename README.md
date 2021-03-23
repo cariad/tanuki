@@ -37,20 +37,6 @@ We'll use an SSH key pair to authenticate SSH connections into _tanuki_.
 
 1. Add your new key [to your GitHub account](https://github.com/settings/ssh/new).
 
-## Prepare a GPG key pair
-
-We'll use a GPG key to sign our git commits.
-
-1. [Download](https://gpgtools.org/) and install GPG Suite. If you plan on only using `gpg` on the command-line then customise the installation to disable **GPG Mail** and **GPG Services**.
-
-    ![Customised GPG Suite installation](docs/install-gpg-suite.png)
-
-1. Generate a key following the on-screen instructions:
-
-    ```bash
-    gpg --generate-key
-    ```
-
 ## Prepare an Ubuntu USB stick
 
 1. [Download Ubuntu Server 20.10](https://ubuntu.com/download/server#downloads). Use BitTorrent; I like [transmission/transmission](https://github.com/transmission/transmission).
@@ -94,8 +80,6 @@ cd ~/.tanuki
 ./bootstrap.sh
 ```
 
-You will be prompted for your account password once or twice.
-
 With the bootstrap complete, you can SSH from your Mac into _tanuki_ at **tanuki.local**:
 
 ```bash
@@ -103,27 +87,6 @@ ssh cariad@tanuki.local
 ```
 
 Disconnect your monitor and keyboard from _tanuki_ and work from an SSH session for the remainder.
-
-## OPTIONAL: Test CPU scaling
-
-Run:
-
-```bash
-sudo apt install sysbench
-sysbench cpu --cpu-max-prime=10000000 --threads=8 run
-```
-
-Make a note of **total time** under **General statistics**. It could be ~30 seconds.
-
-## Upload your private GPG key
-
-On your Mac:
-
-```bash
-./upload-gpg-key.sh -host tanuki6.local -host-user cariad -key cariad@hey.com
-```
-
-You will be prompted to enter your secret GPG key passphrase. This is required to export the key.
 
 ## Install and configure all the things
 
@@ -138,12 +101,21 @@ You will be prompted to enter your secret GPG key passphrase. This is required t
 
 When the installation is complete, reboot _tanuki_ then reconnect.
 
-## OPTIONAL: Verify CPU scaling
+## FAQs
 
-Run:
+### Why do you install auto-cpufreq?
+
+Session 1:
 
 ```bash
+auto-cpufreq --monitor
+```
+
+Session 2:
+
+```bash
+sudo apt install sysbench
 sysbench cpu --cpu-max-prime=10000000 --threads=8 run
 ```
 
-Compare **total time** to the total you recorded earlier. It _should_ be significantly faster; ~15 seconds.
+Make a note of **total time** under **General statistics**. Before: ~30 seconds. After: ~15 seconds.

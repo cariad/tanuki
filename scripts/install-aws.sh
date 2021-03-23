@@ -3,7 +3,7 @@
 set -e
 
 echo -e "${li:?}Importing AWS CLI key..."
-gpg --import keys/aws-cli.pub
+gpg --import data/aws-cli.pub
 
 echo -e "${li:?}Downloading AWS CLI..."
 curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip     -o /tmp/aws.zip
