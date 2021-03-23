@@ -5,7 +5,10 @@ set -e
 . ./scripts/style.sh
   ./scripts/preamble.sh
 
+. ./identity.sh
+
   ./scripts/update.sh
+  ./scripts/populate-configuration.sh
 . ./scripts/configure-bashrc.sh
 . ./scripts/install-tools.sh
 
