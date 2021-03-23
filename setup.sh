@@ -6,9 +6,6 @@ pushd scripts
 . ./style.sh
 popd
 
-# li="\033[1;34m↪\033[0m "  # List item
-# ok="\033[0;32m✔️\033[0m "  # OK
-
 echo -e "${li:?}Updating..."
 sudo apt update --yes
 
@@ -35,37 +32,12 @@ echo -e "${li:?}Installing auto-cpufreq process..."
 # auto-cpufreq --install
 
 pushd scripts
+# git must be configured before importing the GPG key.
 ./configure-git.sh
+# The import script will add the signing key to the git configuration.
+./import-gpg-key.sh
 ./configure-known-hosts.sh
 popd
-
-#
-# Import GPG key.
-#
-
-if [ -f private.key ]; then
-  echo -e "${li:?}Importing private key..."
-  gpg --import private.key
-  rm -f        private.key
-
-  echo -e "${li:?}Discovering private key..."
-  key_id="$(gpg --with-colons --list-secret-keys |
-            awk -F: '$1 == "fpr" {print $10;}' |
-            head --lines 1)"
-
-  git config --global user.signingkey "${key_id:?}"
-else
-  echo -e "${li:?}No private key to import."
-fi
-
-if [ -f ~/.gitconfig ]; then
-  echo -e "${li:?}Backing-up .gitconfig..."
-  rm -f ~/.gitconfig.old
-  mv ~/.gitconfig ~/.gitconfig.old
-fi
-
-
-
 
 echo -e "${li:?}Installing packages..."
 sudo apt install --yes \
@@ -73,12 +45,12 @@ sudo apt install --yes \
     docker.io          \
     docker-compose     \
     libbz2-dev         \
-    libffi-dev \
-    liblzma-dev \
-    libncurses5-dev \
-    libncursesw5-dev \
-    libreadline-dev \
-    libsqlite3-dev \
+    libffi-dev         \
+    liblzma-dev        \
+    libncurses5-dev    \
+    libncursesw5-dev   \
+    libreadline-dev    \
+    libsqlite3-dev     \
     libssl-dev \
     llvm \
     tk-dev \
