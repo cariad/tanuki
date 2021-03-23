@@ -2,9 +2,6 @@
 
 export CFLAGS="-O2"
 
-# GPG_TTY="$(tty)"
-# export GPG_TTY
-
 export PIPENV_VENV_IN_PROJECT=1
 
 export PYENV_ROOT="${HOME:?}/.pyenv"
