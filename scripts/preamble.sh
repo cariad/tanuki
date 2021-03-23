@@ -21,7 +21,7 @@ echo "Press Ctrl+C NOW if you're not certain you want to do this."
 echo
 echo "Are these personal details correct?"
 echo
-cat ../identity.sh
+cat identity.sh
 echo
 echo "If not, press Ctrl+C NOW to stop and edit \"identity.sh\"."
 echo
