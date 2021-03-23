@@ -1,4 +1,4 @@
-# tanuki: Set up an Intel NUC for remote Visual Studio Code Python development
+# tanuki: My Intel NUC setup script
 
 [![tanuki](https://github.com/cariad/tanuki/actions/workflows/ci.yml/badge.svg)](https://github.com/cariad/tanuki/actions/workflows/ci.yml)
 
