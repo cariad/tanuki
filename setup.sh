@@ -44,3 +44,5 @@ fi
 
 echo
 echo -e "${ok:?}Run \"sudo reboot\" to complete the setup."
+
+set +e
