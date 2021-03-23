@@ -1,5 +1,7 @@
 # tanuki
 
+[![tanuki](https://github.com/cariad/tanuki/actions/workflows/ci.yml/badge.svg)](https://github.com/cariad/tanuki/actions/workflows/ci.yml)
+
 Hi! I'm **[Cariad](https://cariad.io)**. I'm a **freelance Python developer** by trade.
 
 I run **Visual Studio Code on a MacBook Pro** (_macaroni_) and use the Remote SSH extension to **develop, test and run my code on an Intel NUC** (_tanuki_).
