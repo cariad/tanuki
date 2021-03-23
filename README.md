@@ -101,9 +101,38 @@ cd ~/.tanuki
 ./setup.sh
 ```
 
-You will be prompted to enter your secret GPG key passphrase. This is required to import the key.
+When the installation is complete, reboot _tanuki_ or log out and back in.
 
-When the installation is complete, reboot _tanuki_ then reconnect.
+## Finalising
+
+### SSH authentication
+
+`setup.sh` will output a public SSH key which allows _tanuki_ to authenticate with services like GitHub and GitLab without passwords.
+
+You must add the public SSH key to GitHub, GitLab et al yourself.
+
+### Commit signing
+
+`git` will be configured to sign commits, but you must enable it in Visual Studio Code if you commit via the Command Palette.
+
+Set `git.enableCommitSigning` to `true`.
+
+`setup.sh` will also output a GPG key which must be added to GitHub, GitLab et al for your signature to be recognised.
+
+## Verification
+
+1. Open Visual Studio Code on your Mac.
+1. In the Command Palette, run **Remote-SSH: Connect to Host...**.
+1. Connect as `cariad@tanuki.local`.
+1. Visual Studio Code will take a moment to install Visual Studio Code Server on _tanuki_.
+1. Verify your GitLab authentication is set up by cloning a private repository.
+1. Verify your GitHub authentication is set up by cloning a private repository.
+1. Verify your commit signing is set up by
+
+
+
+
+
 
 ## FAQs
 

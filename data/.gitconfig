@@ -7,5 +7,5 @@
 [tag]
 	gpgsign = true
 [user]
-	email = ${TANUKI_EMAIL:?}
-	name = ${TANUKI_NAME:?}
+	email = ${TANUKI_EMAIL}
+	name = ${TANUKI_NAME}
