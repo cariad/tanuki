@@ -2,17 +2,17 @@
 
 [![tanuki](https://github.com/cariad/tanuki/actions/workflows/ci.yml/badge.svg)](https://github.com/cariad/tanuki/actions/workflows/ci.yml)
 
-Hi! I'm **[Cariad](https://cariad.io)**. I'm a **freelance Python developer** by trade.
+Hi! I'm [Cariad](https://cariad.io), and I'm a **freelance Python developer** by trade.
 
-I run **Visual Studio Code on a MacBook Pro** (_macaroni_) and use the Remote SSH extension to **develop, test and run my code on an Intel NUC** (_tanuki_).
+I run Visual Studio Code on a MacBook Pro (aka _macaroni_) and use the Remote SSH extension to develop, test and run my code on an Intel NUC (aka _tanuki_).
 
-This project holds my scripts for setting up _tanuki_ from an empty box to a **remote Python development box**.
+This project holds my scripts for building _tanuki_ up from an empty box to a remote Python development machine.
 
 With thanks to [@dmrz](https://github.com/dmrz) for [inspiring](https://dimamoroz.com/2021/03/09/intel-nuc-for-development/) me to finish this!
 
 ## What does it do?
 
-**Installs:**
+### Installs:
 
 - `aws`
 - `docker`
@@ -25,7 +25,7 @@ With thanks to [@dmrz](https://github.com/dmrz) for [inspiring](https://dimamoro
 - SSH key pair for authenticating with GitHub, GitLab et al.
 - GPG key pair for signing git commits.
 
-**Configures:**
+### Configures:
 
 - GitHub and GitLab as trusted hosts
 - git name and email address
@@ -38,7 +38,7 @@ With thanks to [@dmrz](https://github.com/dmrz) for [inspiring](https://dimamoro
 
 ## Build your own _tanuki_
 
-<span style="font-size: smaller; font-style: italic;">This list contains Amazon UK affiliate links. As an Amazon Associate, I earn from qualifying purchases.</span>
+_This list contains Amazon UK affiliate links. As an Amazon Associate, I earn from qualifying purchases._
 
 If you want to follow along, these are the parts I use:
 
@@ -86,8 +86,8 @@ To run this script yourself, fork the project then edit your [identity.sh](ident
 
 ## Install Ubuntu
 
-1. Plug in the USB stick, then reboot and hammer `F10` to open the boot menu. **Boot from the USB stick.**
-1. During the **Ubuntu installation wizard**, choose the **default options** with these exceptions:
+1. Plug in the USB stick, then reboot and hammer `F10` to open the boot menu. Boot from the USB stick.
+1. During the Ubuntu installation wizard, choose the default options with these exceptions:
     - **Partition the entire disk** but _do not_ use an LVM group. _LVM will partition only half of your SSD._
     - **Enable OpenSSH**. When prompted, import your public SSH key from GitHub. Do not allow password authentication over SSH.
     - Do not install any **featured snaps**.
