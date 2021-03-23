@@ -17,5 +17,6 @@ eval "$(pyenv init -)"
 echo -e "${li:?}Building pyenv..."
 src/configure
 make -C src
+cd ..
 
 echo -e "${ok:?}Installed pyenv!"
