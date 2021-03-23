@@ -70,6 +70,7 @@ echo -e "${li:?}Installing auto-cpufreq process..."
 
 pushd scripts
 ./configure-git.sh
+./configure-known-hosts.sh
 popd
 
 #

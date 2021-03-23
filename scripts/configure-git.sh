@@ -8,5 +8,5 @@ li="\033[1;34m↪\033[0m "  # List item
 ok="\033[0;32m✔️\033[0m "  # OK
 
 echo -e "${li:?}Configuring git..."
-ln home/.gitconfig ~/.gitconfig
+ln ../data/.gitconfig ~/.gitconfig
 echo -e "${ok:?}Configured git!"
