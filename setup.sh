@@ -38,29 +38,43 @@ if [ -f ~/.ssh/id_ed25519 ]; then
   generated_ssh=0
 else
   echo
-  echo "You will be asked to create a passphrase for a new SSH key."
-  echo "Make it memorable -- you'll need to type it again!"
+  echo "A new SSH key will be generated to allow this machine to authenticate"
+  echo "into GitHub, GitLab, etc."
+  echo
+  echo "You'll be asked to create a passphrase for this new key. Make it"
+  echo "memorable -- you'll need to type it again!"
   echo
   ssh-keygen -t ed25519 -C cariad@hey.com -f ~/.ssh/id_ed25519
 
-  eval "$(ssh-agent)"
   echo
   echo "Enter your passphrase again to authorise ssh-agent to remember it."
+  echo
   ssh-add -k ~/.ssh/id_ed25519
-  kill "${SSH_AGENT_PID:?}"
   # likely: ssh-keyscan -t rsa gitlab.com  >> ~/.ssh/known_hosts
   # not likely: ssh -T git@gitlab.com
 
   generated_ssh=1
 fi
 
+#
+# Install auto-cpufreq to enable CPU boosting.
+#
+
 echo -e "${li:?}Installing auto-cpufreq..."
 sudo snap install auto-cpufreq
 
 echo -e "${li:?}Installing auto-cpufreq process..."
+
+# TODO: Enable this for real deployments.
 # auto-cpufreq --install
 
+pushd scripts
+./configure-git.sh
+popd
 
+#
+# Import GPG key.
+#
 
 if [ -f private.key ]; then
   echo -e "${li:?}Importing private key..."
@@ -68,10 +82,10 @@ if [ -f private.key ]; then
   rm -f        private.key
 
   echo -e "${li:?}Discovering private key..."
-  key_id="$(gpg --with-colons --list-secret-keys | awk -F: '$1 == "fpr" {print $10;}' | head --lines 1)"
+  key_id="$(gpg --with-colons --list-secret-keys |
+            awk -F: '$1 == "fpr" {print $10;}' |
+            head --lines 1)"
 
-  echo -e "${li:?}Configuring git..."
-  ln home/.gitconfig ~/.gitconfig
   git config --global user.signingkey "${key_id:?}"
 else
   echo -e "${li:?}No private key to import."
