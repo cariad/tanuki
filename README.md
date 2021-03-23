@@ -21,7 +21,7 @@ If you want to follow along, these are the parts I use:
 - [Intel NUC10i5FNH NUC](https://amzn.to/3d1HEud)
 - [Corsair Vengeance 32 GB RAM](https://amzn.to/3r8yqkF)
 - [Samsung 980 PRO 250 GB](https://amzn.to/3ccXYcm)
-- [Samsung 32 GB USB](https://amzn.to/3lEV7Mg)
+- [Samsung 32 GB USB stick](https://amzn.to/3lEV7Mg)
 
 ## Prepare an SSH key pair
 
@@ -44,7 +44,7 @@ You'll use an SSH key pair to authenticate SSH connections from your Mac into _t
 
 ## Fork and configure this project
 
-The only file you need to edit is [identity.sh](identity.sh) which describes all your required personal details.
+The only file you need to edit is [identity.sh](identity.sh).
 
 ## Set up _tanuki_'s hardware
 
@@ -71,37 +71,41 @@ TODO: UEFI.
     1. Yes to import keys from GitHub.
     1. Allow password auth over SSH? NO.
     1. Featured snaps: disable all.
-1. Wait, then reboot.
-1. Login.
 
-## Bootstrap SSH
 
-On the NUC:
+## Bootstrap
 
 ```bash
 git clone https://github.com/cariad/tanuki ~/.tanuki
+```
+
+You **must** clone to `~/.tanuki` otherwise horrible things will happen.
+
+You **must** keep `~/.tanuki` after installation otherwise terrible things will happen.
+
+```bash
 cd ~/.tanuki
 ./bootstrap.sh
 ```
 
-With the bootstrap complete, you can SSH from your Mac into _tanuki_ at **tanuki.local**:
+## Open an SSH session
+
+`bootstrap.sh` will make _tanuki_ available at `<SERVER NAME>.local` on your local network.
+
+My username is "cariad" and server name is "tanuki", so I can open an SSH session with:
 
 ```bash
 ssh cariad@tanuki.local
 ```
 
-Disconnect your monitor and keyboard from _tanuki_ and work from an SSH session for the remainder.
+Disconnect your monitor and keyboard from _tanuki_ and work from an SSH session for the remaining steps.
 
 ## Install and configure all the things
-
-In an SSH session on _tanuki_:
 
 ```bash
 cd ~/.tanuki
 ./setup.sh
 ```
-
-When the installation is complete, reboot _tanuki_ or log out and back in.
 
 ## Finalising
 
@@ -118,21 +122,6 @@ You must add the public SSH key to GitHub, GitLab et al yourself.
 Set `git.enableCommitSigning` to `true`.
 
 `setup.sh` will also output a GPG key which must be added to GitHub, GitLab et al for your signature to be recognised.
-
-## Verification
-
-1. Open Visual Studio Code on your Mac.
-1. In the Command Palette, run **Remote-SSH: Connect to Host...**.
-1. Connect as `cariad@tanuki.local`.
-1. Visual Studio Code will take a moment to install Visual Studio Code Server on _tanuki_.
-1. Verify your GitLab authentication is set up by cloning a private repository.
-1. Verify your GitHub authentication is set up by cloning a private repository.
-1. Verify your commit signing is set up by
-
-
-
-
-
 
 ## FAQs
 

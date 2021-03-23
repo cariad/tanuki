@@ -13,7 +13,7 @@ set -e
 . ./scripts/install-tools.sh
 
 . ./scripts/configure-egress-ssh.sh
-  # TODO: ./scripts/install-auto-cpufreq.sh
+  ./scripts/install-auto-cpufreq.sh
 . ./scripts/configure-git.sh
   ./scripts/configure-known-hosts.sh
   ./scripts/install-docker.sh
