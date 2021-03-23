@@ -2,9 +2,7 @@
 
 set -e
 
-pushd scripts
-. ./style.sh
-popd
+. ./scripts/style.sh
 
 echo -e "${li:?}Updating..."
 sudo apt update --yes
@@ -13,11 +11,10 @@ echo -e "${li:?}Upgrading..."
 sudo apt upgrade --yes
 
 
-pushd scripts
 # Do this early because some values are needed for builds and installations below.
-. ./configure-bashrc.sh
-. ./configure-egress-ssh.sh
-popd
+. ./scripts/configure-bashrc.sh
+
+. ./scripts/configure-egress-ssh.sh
 
 #
 # Install auto-cpufreq to enable CPU boosting.
@@ -31,13 +28,11 @@ echo -e "${li:?}Installing auto-cpufreq process..."
 # TODO: Enable this for real deployments.
 # auto-cpufreq --install
 
-pushd scripts
 # git must be configured before importing the GPG key.
-./configure-git.sh
+./scripts/configure-git.sh
 # The import script will add the signing key to the git configuration.
-./import-gpg-key.sh
-./configure-known-hosts.sh
-popd
+. ./scripts/configure-commit-signing-key.sh
+  ./scripts/configure-known-hosts.sh
 
 echo -e "${li:?}Installing packages..."
 sudo apt install --yes \
@@ -132,13 +127,25 @@ rm -rf /tmp/aws
 
 
 echo
-echo
-echo -e "${ok:?}Nearly done!"
 
-if [ "${generated_ssh:?}" == "1" ]; then
-  echo -e "${ok:?}Your public key is: $(cat ~/.ssh/id_ed25519.pub)"
-  echo -e "${li:?}To add this key to GitHub: https://github.com/settings/ssh/new"
-  echo -e "${li:?}To add this key to GitLab: https://gitlab.com/-/profile/keys"
+if [ -z "${GPG_KEY}" ]; then
+  echo
+  echo -e "${ok:?}A new GPG key was created:"
+  echo
+  gpg --armor --export "${GPG_KEY:?}"
+  echo
+  echo -e "${li:?}To add this GPG key to GitHub: https://github.com/settings/gpg/new"
+  echo -e "${li:?}To add this GPG key to GitLab: https://gitlab.com/-/profile/gpg_keys"
 fi
 
-echo -e "${ok:?}Run \"sudo reboot\" now to complete the setup."
+if [ "${generated_ssh:?}" == "1" ]; then
+  echo
+  echo -e "${ok:?}A new SSH key was created:"
+  echo
+  cat ~/.ssh/id_ed25519.pub
+  echo
+  echo -e "${li:?}To add this SSH key to GitHub: https://github.com/settings/ssh/new"
+  echo -e "${li:?}To add this SSH key to GitLab: https://gitlab.com/-/profile/keys"
+fi
+
+echo -e "${ok:?}Run \"sudo reboot\" to complete the setup."

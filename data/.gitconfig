@@ -4,6 +4,8 @@
 	defaultBranch = main
 [pull]
 	rebase = false
+[tag]
+	gpgsign = true
 [user]
 	email = cariad@hey.com
 	name = Cariad Eccleston
