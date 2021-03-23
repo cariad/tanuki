@@ -31,4 +31,4 @@ echo
 echo "After you've authenticated, feel free to leave this running and grab a"
 echo "coffee or kiwi fruit."
 echo
-read -r -p "Press Enter to start setup... "
+read -r -p "Press Ctrl+C to stop or Enter to start setup... "
