@@ -90,9 +90,9 @@ To run this script yourself, fork the project then edit your [identity.sh](ident
 1. Reboot and hammer `F10` to open the boot menu.
 1. Boot from the USB stick.
 1. During the Ubuntu installation wizard, choose the default options with these exceptions:
-    - **Partition the entire disk** but _do not_ use an LVM group. _LVM will partition only half of your SSD._
-    - **Enable OpenSSH**. When prompted, import your public SSH key from GitHub. Do not allow password authentication over SSH.
-    - Do not install any **featured snaps**.
+    - **Partition the entire disk** but don't make an LVM group. _LVM will partition only half of your SSD._
+    - **Enable OpenSSH**. Import your public SSH key from GitHub. Do not allow password authentication over SSH.
+    - Do not install any featured snaps.
 
 ## Bootstrap
 
