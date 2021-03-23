@@ -15,3 +15,4 @@ echo "Please connect via SSH ($(whoami)@$(hostname).local) to run \"setup.sh\"."
 echo
 
 set +e
+

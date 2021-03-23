@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 set -e
 
 tanukirc_line=". ~/.tanuki/data/bashrc.sh"
@@ -14,6 +13,6 @@ fi
 
 echo -e "${li:?}Importing bashrc..."
 eval "${tanukirc_line:?}"
-echo -e "${ok:?}Imported bashrc!"
 
+echo -e "${ok:?}Imported bashrc!"
 set +e

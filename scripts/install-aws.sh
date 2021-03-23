@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 set -e
 
 echo -e "${li:?}Importing AWS CLI key..."

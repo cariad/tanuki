@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 set -e
 
 if [ -d ~/.pyenv ]; then

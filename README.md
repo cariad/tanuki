@@ -1,18 +1,40 @@
 # tanuki
 
-Hi! I'm **[Cariad](https://cariad.io)**. I'm a **Python developer** by trade.
+Hi! I'm **[Cariad](https://cariad.io)**. I'm a **freelance Python developer** by trade.
 
-I run **Visual Studio Code on a MacBook Pro** (_macaroni_), and use the Remote SSH extension to **develop, run and test my code on an Intel NUC** (_tanuki_).
+I run **Visual Studio Code on a MacBook Pro** (_macaroni_) and use the Remote SSH extension to **develop, test and run my code on an Intel NUC** (_tanuki_).
 
-This project holds my **scripts and documentation** for setting up _tanuki_ from an empty box to a **remote Python development machine**.
+This project holds my scripts for setting up _tanuki_ from an empty box to a **remote Python development box**.
 
 With thanks to [@dmrz](https://github.com/dmrz) for [inspiring](https://dimamoroz.com/2021/03/09/intel-nuc-for-development/) me to finish this!
 
-## Assumptions and requirements
+## What does it do?
 
-This guide assumes you have a Mac running **macOS 11.0 Big Sur or later**, and that you intend to install **Ubuntu Server 20.10** onto an **Intel NUC10i5FNH NUC** (or compatible).
+**Installs:**
 
-## Building your own _tanuki_
+- `aws`
+- `docker`
+- `pipenv`
+- `pyenv`
+- `python` 3.9
+
+**Creates:**
+
+- SSH key pair for authenticating with GitHub, GitLab et al.
+- GPG key pair for signing git commits.
+
+**Configures:**
+
+- GitHub and GitLab as trusted hosts
+- git name and email address
+
+**Enables:**
+
+- Commit signing
+- CPU performance mode
+- Local domain name at `<SERVER NAME>.local`
+
+## Build your own _tanuki_
 
 <span style="font-size: smaller; font-style: italic;">This list contains Amazon UK affiliate links. As an Amazon Associate, I earn from qualifying purchases.</span>
 
@@ -25,7 +47,7 @@ If you want to follow along, these are the parts I use:
 
 ## Prepare an SSH key pair
 
-You'll use an SSH key pair to authenticate SSH connections from your Mac into _tanuki_.
+You'll need an SSH key pair to authenticate SSH sessions from your Mac into _tanuki_.
 
 1. On your Mac:
 
@@ -35,72 +57,65 @@ You'll use an SSH key pair to authenticate SSH connections from your Mac into _t
     pbcopy < ~/.ssh/id_ed25519.pub           # Copy your public key to the clipboard
     ```
 
-1. Add your new key [to your GitHub account](https://github.com/settings/ssh/new). _The Ubuntu installer will download your key from GitHub and set up OpenSSH automatically._
+1. Add your new key [to your GitHub account](https://github.com/settings/ssh/new). _The Ubuntu installer will download your key from GitHub and set up OpenSSH for you._
 
 ## Prepare an Ubuntu USB stick
 
-1. [Download Ubuntu Server 20.10](https://ubuntu.com/download/server#downloads). Use BitTorrent; I like [transmission/transmission](https://github.com/transmission/transmission).
-1. Burn the ISO to a USB stick. I like [balena-io/etcher](https://github.com/balena-io/etcher).
+1. [Download Ubuntu Server 20.10](https://ubuntu.com/download/server#downloads). _Use BitTorrent; I like [transmission/transmission](https://github.com/transmission/transmission)._
+1. Burn the ISO to a USB stick. _I like [balena-io/etcher](https://github.com/balena-io/etcher)._
 
-## Fork and configure this project
+## Configuration
 
-The only file you need to edit is [identity.sh](identity.sh).
+To run this script yourself, fork the project then edit your [identity.sh](identity.sh).
 
 ## Set up _tanuki_'s hardware
 
-Connect _tanuki_ to a keyboard, monitor and network.
-
-TODO: UEFI.
+1. Connect _tanuki_ to a keyboard, monitor and network.
+1. Turn it on and hammer `F2` to open the UEFI menu.
+1. Press `F9` to load optimised defaults.
+1. Change:
+    - **Advanced / Onboard devices / HD audio:** _disable_
+    - **Advanced / Onboard devices / Digital microphone:** _disable_
+    - **Advanced / Onboard devices / WLAN:** _disable_
+    - **Advanced / Onboard devices / Bluetooth:** _disable_
+    - **Advanced / Onboard devices / HDMI CEC control:** _disable_
+    - **Cooling / Fan control mode:** _Cool_
+1. Press `F10` to save and exit the UEFI menu.
 
 ## Install Ubuntu
 
-1. Install:
-    1. Select your language (English UK)
-    1. Offer to use later installer: accept.
-    1. Identify keyboard. The default English US seems to be fine.
-    1. Network. Check IPv4 DHCP is enabled.
-    1. No proxy.
-    1. Ensure GB mirror is prefilled.
-    1. Use entire disk, but disable LVM group.
-    1. Ensure the mount point has the same size as your disk.
-    1. Your name: Cariad
-    1. Server's name: tanuki
-    1. Username: cariad
-    1. Password: ********
-    1. Yes to install OpenSSH server.
-    1. Yes to import keys from GitHub.
-    1. Allow password auth over SSH? NO.
-    1. Featured snaps: disable all.
-
+1. Plug in the USB stick, then reboot and hammer `F10` to open the boot menu. **Boot from the USB stick.**
+1. During the **Ubuntu installation wizard**, choose the **default options** with these exceptions:
+    - **Partition the entire disk** but _do not_ use an LVM group. _LVM will partition only half of your SSD._
+    - **Enable OpenSSH**. When prompted, import your public SSH key from GitHub. Do not allow password authentication over SSH.
+    - Do not install any **featured snaps**.
 
 ## Bootstrap
 
+`bootstrap.sh` is a lightweight script to enable _tanuki_'s local domain name so subsequent steps can be easily run in an SSH session.
+
+On _tanuki_:
+
 ```bash
 git clone https://github.com/cariad/tanuki ~/.tanuki
-```
-
-You **must** clone to `~/.tanuki` otherwise horrible things will happen.
-
-You **must** keep `~/.tanuki` after installation otherwise terrible things will happen.
-
-```bash
 cd ~/.tanuki
 ./bootstrap.sh
 ```
 
-## Open an SSH session
+**Terrible things** will happen if you:
 
-`bootstrap.sh` will make _tanuki_ available at `<SERVER NAME>.local` on your local network.
+- Clone to anywhere other than `~/.tanuki`
+- Ever delete `~/.tanuki`
 
-My username is "cariad" and server name is "tanuki", so I can open an SSH session with:
+## Install and configure all the things
+
+Open an SSH session from your Mac:
 
 ```bash
 ssh cariad@tanuki.local
 ```
 
-Disconnect your monitor and keyboard from _tanuki_ and work from an SSH session for the remaining steps.
-
-## Install and configure all the things
+Run `setup.sh` on _tanuki_:
 
 ```bash
 cd ~/.tanuki
@@ -123,21 +138,10 @@ Set `git.enableCommitSigning` to `true`.
 
 `setup.sh` will also output a GPG key which must be added to GitHub, GitLab et al for your signature to be recognised.
 
-## FAQs
+## Hello there! 🎉
 
-### Why do you install auto-cpufreq?
+My name's **Cariad**, and I'm an [freelance DevOps engineer](https://cariad.io).
 
-Session 1:
+I'd love to spend more time working on open source projects, but I need to chase gigs that pay the rent. If this project has value to you, please consider [☕️ sponsoring](https://github.com/sponsors/cariad) me.
 
-```bash
-auto-cpufreq --monitor
-```
-
-Session 2:
-
-```bash
-sudo apt install sysbench
-sysbench cpu --cpu-max-prime=10000000 --threads=8 run
-```
-
-Make a note of **total time** under **General statistics**. Before: ~30 seconds. After: ~15 seconds.
+Thank you! ❤️

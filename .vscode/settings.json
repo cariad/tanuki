@@ -1,10 +1,14 @@
 {
   "cSpell.words": [
+    "avahi",
     "balena",
     "cariad",
     "cpufreq",
     "pbcopy",
+    "pipenv",
+    "pyenv",
     "sysbench",
-    "tanuki"
+    "tanuki",
+    "wlan"
   ]
 }

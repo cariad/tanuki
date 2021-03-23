@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 set -e
 
 if [ -f ~/.ssh/known_hosts ]; then
