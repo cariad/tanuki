@@ -9,7 +9,7 @@ fi
 
 echo -e "${li:?}Creating commit signing key..."
 
-GPG_KEY=$(gpg --batch --gen-key ../data/gpg-info.txt 2>&1 |
+GPG_KEY=$(gpg --batch --gen-key data/gpg-info.txt 2>&1 |
       awk 'NR==1 { print $3; }')
 
 export GPG_KEY

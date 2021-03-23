@@ -33,12 +33,11 @@ echo -e "${li:?}Installing auto-cpufreq process..."
 # The import script will add the signing key to the git configuration.
 . ./scripts/configure-commit-signing-key.sh
   ./scripts/configure-known-hosts.sh
+  ./scripts/install-docker.sh
 
 echo -e "${li:?}Installing packages..."
 sudo apt install --yes \
     build-essential    \
-    docker.io          \
-    docker-compose     \
     libbz2-dev         \
     libffi-dev         \
     liblzma-dev        \
@@ -46,22 +45,12 @@ sudo apt install --yes \
     libncursesw5-dev   \
     libreadline-dev    \
     libsqlite3-dev     \
-    libssl-dev \
-    llvm \
+    libssl-dev         \
+    llvm               \
     tk-dev \
     unzip              \
     xz-utils \
     zlib1g-dev
-
-echo -e "${li:?}Enabling Docker..."
-sudo systemctl enable docker
-
-echo -e "${li:?}Starting Docker..."
-sudo systemctl start docker
-
-user="$(whoami)"
-echo -e "${li:?}Adding ${user:?} to Docker group..."
-sudo gpasswd -a "${user:?}" docker
 
 #
 # Install pyenv.
