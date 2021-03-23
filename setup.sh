@@ -15,57 +15,19 @@ sudo apt update --yes
 echo -e "${li:?}Upgrading..."
 sudo apt upgrade --yes
 
-#
-# Import environment variables. Do this early because some values are needed for
-# builds and installations below.
-#
 
-tanukirc_line=". ~/.tanuki/home/bashrc.sh"
-
-if ! grep -q "${tanukirc_line:?}" ~/.bashrc; then
-  echo -e "${li:?}Referencing: ${tanukirc_line:?}"
-  echo "${tanukirc_line:?}" >> ~/.bashrc
-else
-  echo -e "${li:?}tanukirc already referenced."
-fi
-
-echo -e "${li:?}Importing environment variables..."
-eval "${tanukirc_line:?}"
-
-
-#
-# Create SSH key pair (for authenticating with GitLab, etc).
-#
-
-if [ -f ~/.ssh/id_ed25519 ]; then
-  echo -e "${li:?}Skipping SSH key pair generation."
-  generated_ssh=0
-else
-  echo
-  echo "A new SSH key will be generated to allow this machine to authenticate"
-  echo "into GitHub, GitLab, etc."
-  echo
-  echo "You'll be asked to create a passphrase for this new key. Make it"
-  echo "memorable -- you'll need to type it again!"
-  echo
-  ssh-keygen -t ed25519 -C cariad@hey.com -f ~/.ssh/id_ed25519
-
-  echo
-  echo "Enter your passphrase again to authorise ssh-agent to remember it."
-  echo
-  ssh-add -k ~/.ssh/id_ed25519
-  # likely: ssh-keyscan -t rsa gitlab.com  >> ~/.ssh/known_hosts
-  # not likely: ssh -T git@gitlab.com
-
-  generated_ssh=1
-fi
+pushd scripts
+# Do this early because some values are needed for builds and installations below.
+. ./configure-bashrc.sh
+. ./configure-egress-ssh.sh
+popd
 
 #
 # Install auto-cpufreq to enable CPU boosting.
 #
 
 echo -e "${li:?}Installing auto-cpufreq..."
-sudo snap install auto-cpufreq
+# TODO: sudo snap install auto-cpufreq
 
 echo -e "${li:?}Installing auto-cpufreq process..."
 
@@ -160,13 +122,13 @@ popd
 #
 
 echo -e "${li:?}Installing Python ${PYENV_VERSION:?}..."
-pyenv install "${PYENV_VERSION:?}" --skip-existing
+# TODO: pyenv install "${PYENV_VERSION:?}" --skip-existing
 
 #
 # Install Python packages.
 #
 
-python -m pip install --upgrade pip pipenv
+# TODO: python -m pip install --upgrade pip pipenv
 
 #
 # Install AWS CLI.
