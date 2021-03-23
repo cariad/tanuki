@@ -66,11 +66,11 @@ You'll need an SSH key pair to authenticate SSH sessions from your Mac into _tan
 1. [Download Ubuntu Server 20.10](https://ubuntu.com/download/server#downloads). _Use BitTorrent; I like [transmission/transmission](https://github.com/transmission/transmission)._
 1. Burn the ISO to a USB stick. _I like [balena-io/etcher](https://github.com/balena-io/etcher)._
 
-## Configuration
+## Personalise
 
 To run this script yourself, fork the project then edit your [identity.sh](identity.sh).
 
-## Set up _tanuki_'s hardware
+## Configure UEFI
 
 1. Connect _tanuki_ to a keyboard, monitor and network.
 1. Turn it on and hammer `F2` to open the UEFI menu.
