@@ -38,11 +38,15 @@ if [ -f ~/.ssh/id_ed25519 ]; then
   generated_ssh=0
 else
   echo
-  echo
-  echo -e "${li:?}Generating SSH key pair..."
-  echo
   ssh-keygen -t ed25519 -C cariad@hey.com -f ~/.ssh/id_ed25519
   echo
+
+  eval "$(ssh-agent)"
+  ssh-add -k ~/.ssh/id_ed25519
+  kill "${SSH_AGENT_PID:?}"
+  # likely: ssh-keyscan -t rsa gitlab.com  >> ~/.ssh/known_hosts
+  # not likely: ssh -T git@gitlab.com
+
   generated_ssh=1
 fi
 
