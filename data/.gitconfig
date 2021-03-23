@@ -1,0 +1,11 @@
+[commit]
+	gpgsign = true
+[init]
+	defaultBranch = main
+[pull]
+	rebase = false
+[tag]
+	gpgsign = true
+[user]
+	email = ${TANUKI_EMAIL}
+	name = ${TANUKI_NAME}
