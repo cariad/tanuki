@@ -11,3 +11,4 @@ sudo apt install avahi-daemon --yes
 echo -e "${ok:?}Bootstrap complete!"
 echo
 echo "Please connect via SSH ($(whoami)@$(hostname).local) to run \"setup.sh\"."
+echo

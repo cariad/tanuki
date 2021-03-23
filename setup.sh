@@ -13,7 +13,7 @@ set -e
   ./scripts/configure-known-hosts.sh
   ./scripts/install-docker.sh
   ./scripts/install-pyenv-build-dependencies.sh
-  ./scripts/install-pyenv.sh
+. ./scripts/install-pyenv.sh
   ./scripts/install-python.sh
   ./scripts/install-aws.sh
 
