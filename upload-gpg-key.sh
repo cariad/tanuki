@@ -2,9 +2,7 @@
 
 set -e
 
-li="\033[1;34m↪\033[0m "  # List item
-nk="\033[0;31m⨯\033[0m "  # Not OK
-ok="\033[0;32m✔️\033[0m "  # OK
+. ./scripts/style.sh
 
 while [[ "$#" -gt 0 ]]; do
   case $1 in
@@ -25,7 +23,7 @@ gpg --armor --output "${private:?}" --export-secret-key "${key:?}"
 remote="${host_user:?}@${host:?}"
 
 echo -e "${li:?}Copying to: ${remote:?}"
-scp "${private:?}" "${remote:?}:~/.tanuki/"
+scp "${private:?}" "${remote:?}:~/.tanuki/data"
 rm -rf "${private:?}"
 
 echo -e "${ok:?}Done!"
