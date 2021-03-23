@@ -2,12 +2,16 @@
 
 set -e
 
-echo -e "${li:?}Configuring git..."
-ln data/.gitconfig ~/.gitconfig
+if [ -f ~/.gitconfig ]; then
+  echo -e "${ok:?}\"~/.gitconfig\" already exists."
+else
+  echo -e "${li:?}Configuring git..."
+  ln data/.gitconfig ~/.gitconfig
+fi
 
 if git config --get user.signingkey; then
   echo -e "${ok:?}Commit signing key is already set."
-  exit
+  return
 fi
 
 echo -e "${li:?}Creating commit signing key..."
