@@ -10,7 +10,7 @@ fi
 echo -e "${li:?}Creating commit signing key..."
 
 GPG_KEY=$(gpg --batch --gen-key data/gpg-info.txt 2>&1 |
-          awk 'NR==1 { print $3; }')
+          sed -n -r 's/gpg: key ([0-9A-F]+) marked as ultimately trusted/\1/p')
 
 export GPG_KEY
 
