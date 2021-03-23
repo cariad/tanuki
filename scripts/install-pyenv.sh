@@ -20,3 +20,4 @@ make -C src
 popd
 
 echo -e "${ok:?}Installed pyenv!"
+set +e

@@ -20,3 +20,4 @@ sudo /tmp/aws/install --update
 rm -rf /tmp/aws
 
 echo -e "${ok:?}Installed AWS CLI!"
+set +e

@@ -19,3 +19,4 @@ sudo apt install --yes \
     xz-utils
 
 echo -e "${ok:?}Installed Python build dependencies!"
+set +e

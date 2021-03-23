@@ -16,3 +16,4 @@ echo -e "${li:?}Adding ${user:?} to Docker group..."
 sudo gpasswd -a "${user:?}" docker
 
 echo -e "${ok:?}Installed Docker!"
+set +e

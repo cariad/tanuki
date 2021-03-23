@@ -9,3 +9,4 @@ echo -e "${ok:?}Installed Python ${PYENV_VERSION:?}!"
 echo -e "${li:?}Installing Python packages..."
 python -m pip install --upgrade pip pipenv
 echo -e "${ok:?}Installed Python packages!"
+set +e

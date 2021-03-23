@@ -9,3 +9,4 @@ echo -e "${ok:?}Updated!"
 echo -e "${li:?}Upgrading..."
 sudo apt upgrade --yes
 echo -e "${ok:?}Upgraded!"
+set +e

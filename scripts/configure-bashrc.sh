@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 
-# Configures git. This must run BEFORE setting up the signing key.
-
 set -e
-
 
 tanukirc_line=". ~/.tanuki/data/bashrc.sh"
 
@@ -18,3 +15,5 @@ fi
 echo -e "${li:?}Importing bashrc..."
 eval "${tanukirc_line:?}"
 echo -e "${ok:?}Imported bashrc!"
+
+set +e
