@@ -3,99 +3,31 @@
 set -e
 
 . ./scripts/style.sh
-
-echo -e "${li:?}Updating..."
-sudo apt update --yes
-
-echo -e "${li:?}Upgrading..."
-sudo apt upgrade --yes
-
-
-# Do this early because some values are needed for builds and installations below.
+  ./scripts/update.sh
 . ./scripts/configure-bashrc.sh
+. ./scripts/install-tools.sh
 
 . ./scripts/configure-egress-ssh.sh
-
-
-
-echo -e "${li:?}Installing auto-cpufreq..."
-# TODO: sudo snap install auto-cpufreq
-echo -e "${li:?}Installing auto-cpufreq process..."
-# TODO: Enable this for real deployments.
-# auto-cpufreq --install
-
-
-
-# git must be configured before importing the GPG key.
-./scripts/configure-git.sh
-# The import script will add the signing key to the git configuration.
-. ./scripts/configure-commit-signing.sh
-
-echo "${GPG_KEY:?}"
-
+  # TODO: ./scripts/install-auto-cpufreq.sh
+  ./scripts/configure-git.sh
   ./scripts/configure-known-hosts.sh
   ./scripts/install-docker.sh
-
-echo -e "${li:?}Installing packages..."
-sudo apt install --yes unzip
-
-./scripts/install-pyenv-build-dependencies.sh
-./scripts/install-pyenv.sh
-
-#
-# Install Python.
-#
-
-echo -e "${li:?}Installing Python ${PYENV_VERSION:?}..."
-# TODO: pyenv install "${PYENV_VERSION:?}" --skip-existing
-
-#
-# Install Python packages.
-#
-
-# TODO: python -m pip install --upgrade pip pipenv
-
-#
-# Install AWS CLI.
-#
-
-echo -e "${li:?}Importing AWS CLI Team key..."
-gpg --import keys/aws-cli.pub
-
-echo -e "${li:?}Downloading AWS CLI..."
-curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip     -o /tmp/aws.zip
-
-echo -e "${li:?}Downloading AWS CLI signature..."
-curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip.sig -o /tmp/aws.zip.sig
-
-echo -e "${li:?}Verifying AWS CLI signature..."
-gpg --verify /tmp/aws.zip.sig /tmp/aws.zip
-rm -rf /tmp/aws.zip.sig
-
-echo -e "${li:?}Unpacking AWS CLI..."
-unzip -q /tmp/aws.zip -d /tmp
-
-echo -e "${li:?}Installing AWS CLI..."
-sudo /tmp/aws/install --update
-aws --version
-
-echo -e "${li:?}Cleaning-up after AWS CLI installation..."
-rm -rf /tmp/aws.zip
-rm -rf /tmp/aws
-
-echo "${GPG_KEY:?}"
+  ./scripts/install-pyenv-build-dependencies.sh
+  ./scripts/install-pyenv.sh
+  ./scripts/install-python.sh
+  ./scripts/install-aws.sh
 
 if [ -n "${GPG_KEY}" ]; then
   echo
   echo "A new GPG key was created:"
   echo
-  echo "    $(gpg --armor --export "${GPG_KEY:?}")"
+  gpg --armor --export "${GPG_KEY:?}"
   echo
   echo "    - To add this GPG key to GitHub: https://github.com/settings/gpg/new"
   echo "    - To add this GPG key to GitLab: https://gitlab.com/-/profile/gpg_keys"
 fi
 
-if [ "${generated_ssh:?}" == "1" ]; then
+if [ "${CREATED_SSH:?}" == "1" ]; then
   echo
   echo "A new SSH key was created:"
   echo
